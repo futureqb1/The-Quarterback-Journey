@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Quarterback Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--fg:#000;--mute:#666;--line:#000;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--fg:#fff;--mute:#999;--line:#fff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#000;--fg:#fff;--mute:#999;--line:#fff;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 1.2rem/1.6 "Nunito",system-ui,sans-serif;transition:background .4s,color .4s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.display,h1,h2,h3{font-family:"Fredoka","Arial Rounded MT Bold",sans-serif;font-weight:700;line-height:.9;letter-spacing:-.01em;margin:0}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:2px solid var(--line);display:flex;align-items:center;gap:1rem;padding:.7rem 1.25rem;flex-wrap:wrap}
+.brand{font:700 1.6rem "Fredoka","Arial Rounded MT Bold",sans-serif;color:var(--fg);text-decoration:none;margin-right:auto}
+nav{display:flex;gap:.25rem;flex-wrap:wrap}
+nav a{color:var(--fg);text-decoration:none;padding:.3rem .7rem;font-size:1rem;border:2px solid transparent;transition:background .2s,color .2s}
+nav a:hover{border-color:var(--line)}
+nav a[aria-current="page"]{background:var(--fg);color:var(--bg)}
+button{font:inherit;cursor:pointer;color:var(--fg);background:none;border:2px solid var(--line);padding:.3rem .8rem;transition:background .2s,color .2s}
+button:hover,button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+main{max-width:1100px;margin:0 auto;padding:0 1.25rem 5rem}
+.view{display:none}
+.view.on{display:block;animation:in .55s cubic-bezier(.2,.7,.2,1)}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero{padding:clamp(2rem,6vw,5rem) 0 2rem;display:grid;gap:2rem;grid-template-columns:1.1fr .9fr;align-items:center}
+.hero h1{font-size:clamp(4.5rem,15vw,11rem)}
+.hero p{max-width:30ch;font-size:1.4rem;color:var(--mute);margin:1.5rem 0}
+.cta{display:inline-block;background:var(--fg);color:var(--bg);text-decoration:none;padding:.8rem 1.6rem;font:700 1.4rem "Fredoka","Arial Rounded MT Bold",sans-serif;border:2px solid var(--fg);transition:background .2s,color .2s}
+.cta:hover{background:var(--bg);color:var(--fg)}
+svg.field{width:100%;height:auto;border:2px solid var(--line);display:block}
+.field .yd{stroke:var(--fg);stroke-width:1;opacity:.25}
+.field .rt{fill:none;stroke:var(--fg);stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.field .rt.draw{animation:dr 1.6s .3s cubic-bezier(.5,0,.2,1) forwards}
+.field .dash{stroke-dasharray:.03 .02;opacity:.5}
+@keyframes dr{to{stroke-dashoffset:0}}
+.field .x{fill:none;stroke:var(--fg);stroke-width:3}
+.field .o{fill:var(--fg)}
+h2.page{font-size:clamp(3rem,9vw,7rem);padding:3rem 0 1.5rem}
+.lede{max-width:34ch;font-size:1.6rem;line-height:1.4;margin:0 0 3rem}
+.tl{border-left:2px solid var(--line);margin:0 0 2rem 6px;padding:0}
+.tl li{list-style:none;position:relative;padding:0 0 2.6rem 2rem;max-width:60ch}
+.tl li::before{content:"";position:absolute;left:-9px;top:.55rem;width:16px;height:16px;background:var(--bg);border:2px solid var(--line);border-radius:50%;transition:background .3s .2s}
+.view.on .tl li::before{background:var(--fg)}
+.tl h3{font-size:2.4rem;margin-bottom:.4rem}
+.tl p{margin:0;color:var(--mute)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border:2px solid var(--line);margin-bottom:3rem}
+.stats div{padding:1.5rem;border-right:2px solid var(--line)}
+.stats div:last-child{border-right:0}
+.stats b{display:block;font:700 clamp(3.5rem,8vw,5.5rem)/1 "Fredoka","Arial Rounded MT Bold",sans-serif}
+.stats span{color:var(--mute)}
+details{border-top:2px solid var(--line)}
+details:last-of-type{border-bottom:2px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:1.2rem 0;font:700 2.2rem "Fredoka","Arial Rounded MT Bold",sans-serif;display:flex;justify-content:space-between}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";transition:transform .3s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin:0 0 1.5rem;max-width:60ch;color:var(--mute);animation:in .4s}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.big{font:700 clamp(2.6rem,6vw,4.4rem)/.95 "Fredoka","Arial Rounded MT Bold",sans-serif;margin:0 0 2rem}
+.tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin:0 0 1rem}
+.note{color:var(--mute);min-height:3.2em;max-width:44ch}
+.links{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem}
+.links a{color:var(--fg);border:2px solid var(--line);padding:.5rem 1.2rem;text-decoration:none;transition:background .2s,color .2s}
+.links a:hover{background:var(--fg);color:var(--bg)}
+footer{border-top:2px solid var(--line);padding:1.5rem 1.25rem;text-align:center;color:var(--mute);font-size:1rem}
+@media (max-width:760px){.hero,.cols{grid-template-columns:1fr}.stats div{border-right:0;border-bottom:2px solid var(--line)}.stats div:last-child{border-bottom:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.field .rt{stroke-dashoffset:0}}
+
+.hero h1{font-size:clamp(3.6rem,12vw,8.5rem);line-height:1;letter-spacing:0}
+h2.page{line-height:1}
+header{border-radius:0 0 28px 28px}
+nav a,button,.cta,.links a{border-radius:999px}
+button{font-weight:600}
+svg.field{border-radius:32px}
+.field .rt{stroke-width:6;stroke-linejoin:round}
+.stats{border-radius:32px;overflow:hidden}
+details,details:last-of-type{border:2px solid var(--line);border-radius:28px;padding:0 1.5rem;margin-bottom:.9rem}
+summary{font-size:1.8rem}
+.tl{border-left-width:4px}
+.tl li::before{width:20px;height:20px;left:-13px;top:.5rem}
+.tl h3{font-size:2rem;line-height:1.1}
+.big{line-height:1.05}
+.soc{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.soc a{display:block;color:var(--fg);text-decoration:none;border:2px solid var(--line);border-radius:32px;padding:2rem;transition:background .2s,color .2s,transform .2s}
+.soc a:hover{background:var(--fg);color:var(--bg);transform:translateY(-4px)}
+.soc b{display:block;font:700 clamp(2.4rem,6vw,3.6rem)/1.05 "Fredoka","Arial Rounded MT Bold",sans-serif}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="#home">Eli</a>
+  <nav aria-label="Pages">
+    <a href="#home">Home</a><a href="#origins">Origins</a><a href="#the-work">The work</a><a href="#setbacks">The challenge</a><a href="#next">What’s next</a><a href="#socials">Socials</a>
+  </nav>
+  <button id="theme" aria-pressed="false" title="Invert colors">Invert</button>
+</header>
+<main>
+
+<section class="view" id="home">
+  <div class="hero">
+    <div>
+      <h1>My road<br>to QB.</h1>
+      <p>I play wide receiver and cornerback now. Next year I want to play quarterback, and I’m training for it this offseason.</p>
+      <a class="cta" href="#origins">Read the story</a>
+    </div>
+    <svg class="field" viewBox="0 0 400 480" role="img" aria-label="A drawn pass route from the quarterback to the end zone">
+      <g class="yd"><line x1="0" y1="60" x2="400" y2="60" stroke="currentColor"/><line x1="0" y1="140" x2="400" y2="140"/><line x1="0" y1="220" x2="400" y2="220"/><line x1="0" y1="300" x2="400" y2="300"/><line x1="0" y1="380" x2="400" y2="380"/></g>
+      <path class="rt dash draw" pathLength="1" d="M200 400 L200 430 M200 400 Q200 330 120 300"/>
+      <path class="rt draw" pathLength="1" d="M300 400 L300 200 Q300 120 200 60"/>
+      <path class="rt draw" pathLength="1" style="animation-delay:1.1s" d="M200 400 Q230 160 200 70"/>
+      <circle class="o" cx="200" cy="400" r="12"/>
+      <g class="x"><path d="M296 52 l16 16 m0 -16 l-16 16" transform="translate(-12 -10)"/></g>
+      <ellipse class="o" rx="11" ry="7" cy="0" cx="0">
+        <animateMotion dur="1.4s" begin="1.7s" fill="freeze" path="M200 400 Q230 160 200 70" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".4 0 .2 1"/>
+      </ellipse>
+    </svg>
+  </div>
+</section>
+
+<section class="view" id="origins">
+  <h2 class="page">Origins</h2>
+  <p class="lede">I play receiver and corner today, but I want to be the one throwing the ball.</p>
+  <ul class="tl">
+    <li><h3>Where I am now</h3><p>I play wide receiver and cornerback. I catch passes and cover receivers, so I know how routes and coverages work from both sides.</p></li>
+    <li><h3>What I want</h3><p>Next year I want to play quarterback for my team.</p></li>
+    <li><h3>The offseason</h3><p>The season is over, so now I have time to train. I’m working on my throwing, my footwork, and my knowledge of the game.</p></li>
+    <li><h3>Next season</h3><p>I want to show my coach I’m ready and win the quarterback job.</p></li>
+  </ul>
+</section>
+
+<section class="view" id="the-work">
+  <h2 class="page">The work</h2>
+  <p class="lede">This is what my offseason looks like.</p>
+  <div class="stats">
+    <div><b data-n="500">0</b><span>throws a week, my goal</span></div>
+    <div><b data-n="1">0</b><span>hour of film a week, my goal</span></div>
+    <div><b data-n="7">0</b><span>a.m. wake-ups on training days</span></div>
+  </div>
+  <details open><summary>Footwork</summary><p>Good throws start with your feet. I’m practicing my drops until they feel automatic.</p></details>
+  <details><summary>Film</summary><p>Playing corner helps me read receivers. I’ll watch film to see what defenses do and where they leave open spots.</p></details>
+  <details><summary>Leadership</summary><p>A quarterback leads the offense. I’m starting by being the most prepared player at every workout.</p></details>
+</section>
+
+<section class="view" id="setbacks">
+  <h2 class="page">The challenge</h2>
+  <div class="cols">
+    <p class="big">New position.<br>New skills.<br>Same drive.</p>
+    <div>
+      <p>I’m not a quarterback yet, and I know it. I have to get better at throwing, reading defenses, and leading.</p>
+      <p>Playing receiver and corner gives me a head start. I know what defenders do to stop receivers and what receivers do to beat them.</p>
+      <details><summary>What receiver taught me</summary><p>Running routes shows me where a quarterback needs to put the ball.</p></details>
+      <details><summary>What corner taught me</summary><p>Covering receivers shows me how defenses try to stop a pass.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="next">
+  <h2 class="page">What’s next</h2>
+  <p class="lede">Next year I want to be the quarterback.</p>
+  <details open><summary>This offseason</summary><p>Throw every week, work on my footwork, and study film.</p></details>
+  <details><summary>Next season</summary><p>Win the quarterback job.</p></details>
+  <details><summary>Long game</summary><p>Keep getting better every year.</p></details>
+  <div class="links"><a href="#home">Back to top</a><a href="mailto:contactfutureqb1@gmail.com">Email me</a></div>
+</section>
+
+<section class="view" id="socials">
+  <h2 class="page">Socials</h2>
+  <p class="lede">Follow along as I train this offseason.</p>
+  <div class="soc">
+    <a href="https://www.tiktok.com/@futureqb1" target="_blank" rel="noopener noreferrer"><b>TikTok</b><span>@futureqb1</span></a>
+    <a href="https://www.youtube.com/@futureqb1yt" target="_blank" rel="noopener noreferrer"><b>YouTube</b><span>@futureqb1yt</span></a>
+  </div>
+  <div class="links"><a href="mailto:contactfutureqb1@gmail.com">Email me</a></div>
+</section>
+
+</main>
+<footer>Eli · Receiver and corner today, quarterback next</footer>
+
+<script>
+(function(){
+  var views=document.querySelectorAll('.view'),links=document.querySelectorAll('nav a'),reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function counters(sec){sec.querySelectorAll('[data-n]').forEach(function(el){var t=+el.dataset.n,s=null;function f(ts){s=s||ts;var p=Math.min((ts-s)/1200,1);el.textContent=reduce?t:Math.round(t*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)})}
+  function route(){
+    var id=(location.hash||'#home').slice(1),sec=document.getElementById(id);
+    if(!sec||!sec.classList.contains('view')){id='home';sec=document.getElementById('home')}
+    views.forEach(function(v){v.classList.remove('on')});
+    sec.classList.add('on');
+    links.forEach(function(a){a.getAttribute('href')==='#'+id?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});
+    scrollTo(0,0);
+    if(id==='the-work')counters(sec);
+    if(id==='home'){sec.querySelectorAll('.rt').forEach(function(p){p.classList.remove('draw');void p.getBoundingClientRect();p.classList.add('draw')})}
+  }
+  addEventListener('hashchange',route);
+
+  var root=document.documentElement,tb=document.getElementById('theme');
+  tb.addEventListener('click',function(){
+    var dark=getComputedStyle(root).getPropertyValue('--bg').trim()==='#000';
+    root.setAttribute('data-theme',dark?'light':'dark');tb.setAttribute('aria-pressed',!dark);
+  });
+  route();
+})();
+</script>
+</body>
+</html>
