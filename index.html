@@ -91,15 +91,40 @@ summary{font-size:1.8rem}
 .soc a{display:block;color:var(--fg);text-decoration:none;border:2px solid var(--line);border-radius:32px;padding:2rem;transition:background .2s,color .2s,transform .2s}
 .soc a:hover{background:var(--fg);color:var(--bg);transform:translateY(-4px)}
 .soc b{display:block;font:700 clamp(2.4rem,6vw,3.6rem)/1.05 "Fredoka","Arial Rounded MT Bold",sans-serif}
+.field .rt.thin{stroke-width:3;opacity:.45}
+.field .pl circle,.field circle.pl{fill:var(--bg);stroke:var(--fg);stroke-width:3}
+.field .x{stroke-linecap:round}
+.field .ball{stroke:var(--bg);stroke-width:1.5}
+header{display:block;border:0;border-radius:0;padding:.75rem 1.25rem .5rem;background:linear-gradient(var(--bg) 65%,transparent)}
+.bar{position:relative;max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:.6rem;border:2px solid var(--line);border-radius:999px;background:var(--bg);padding:.4rem .4rem .4rem 1.4rem;animation:drop .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes drop{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:none}}
+.brand{margin-right:auto;font-size:1.5rem;line-height:1;transition:transform .3s}
+.brand:hover{transform:scale(1.06)}
+nav{position:relative;gap:.15rem;flex-wrap:nowrap}
+nav a{position:relative;z-index:1;border:0;padding:.55rem 1rem;font-weight:600;white-space:nowrap;transition:color .3s,background .2s}
+nav a:hover{background:color-mix(in srgb,var(--fg) 10%,transparent)}
+nav a[aria-current="page"]{background:transparent;color:var(--bg)}
+.ind{position:absolute;z-index:0;top:0;bottom:0;left:0;width:0;border-radius:999px;background:var(--fg);transition:transform .5s cubic-bezier(.65,0,.2,1),width .5s cubic-bezier(.65,0,.2,1)}
+#theme,.menu{padding:.5rem 1.1rem;font-weight:600}
+.menu{display:none}
+@media (max-width:860px){
+  .menu{display:inline-block}
+  .ind{display:none}
+  nav{position:absolute;top:calc(100% + .6rem);left:0;right:0;flex-direction:column;gap:.2rem;padding:.6rem;background:var(--bg);border:2px solid var(--line);border-radius:28px;opacity:0;visibility:hidden;transform:translateY(-10px) scale(.98);transform-origin:top;transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s .3s}
+  nav.open{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+  nav a{padding:.8rem 1.2rem}
+  nav a[aria-current="page"]{background:var(--fg);color:var(--bg)}
+}
 </style>
 </head>
 <body>
 <header>
-  <a class="brand" href="#home">Eli</a>
-  <nav aria-label="Pages">
-    <a href="#home">Home</a><a href="#origins">Origins</a><a href="#the-work">The work</a><a href="#setbacks">The challenge</a><a href="#next">What’s next</a><a href="#socials">Socials</a>
-  </nav>
-  <button id="theme" aria-pressed="false" title="Invert colors">Invert</button>
+  <div class="bar">
+    <a class="brand" href="#home">Eli</a>
+    <nav id="nav" aria-label="Pages"><span class="ind" aria-hidden="true"></span><a href="#home">Home</a><a href="#origins">Origins</a><a href="#the-work">The work</a><a href="#setbacks">The challenge</a><a href="#next">What’s next</a><a href="#socials">Socials</a></nav>
+    <button id="theme" aria-pressed="false" title="Invert colors">Invert</button>
+    <button id="menu" class="menu" aria-expanded="false" aria-controls="nav">Menu</button>
+  </div>
 </header>
 <main>
 
@@ -110,16 +135,26 @@ summary{font-size:1.8rem}
       <p>I play wide receiver and cornerback now. Next year I want to play quarterback, and I’m training for it this offseason.</p>
       <a class="cta" href="#origins">Read the story</a>
     </div>
-    <svg class="field" viewBox="0 0 400 480" role="img" aria-label="A drawn pass route from the quarterback to the end zone">
-      <g class="yd"><line x1="0" y1="60" x2="400" y2="60" stroke="currentColor"/><line x1="0" y1="140" x2="400" y2="140"/><line x1="0" y1="220" x2="400" y2="220"/><line x1="0" y1="300" x2="400" y2="300"/><line x1="0" y1="380" x2="400" y2="380"/></g>
-      <path class="rt dash draw" pathLength="1" d="M200 400 L200 430 M200 400 Q200 330 120 300"/>
-      <path class="rt draw" pathLength="1" d="M300 400 L300 200 Q300 120 200 60"/>
-      <path class="rt draw" pathLength="1" style="animation-delay:1.1s" d="M200 400 Q230 160 200 70"/>
-      <circle class="o" cx="200" cy="400" r="12"/>
-      <g class="x"><path d="M296 52 l16 16 m0 -16 l-16 16" transform="translate(-12 -10)"/></g>
-      <ellipse class="o" rx="11" ry="7" cy="0" cx="0">
-        <animateMotion dur="1.4s" begin="1.7s" fill="freeze" path="M200 400 Q230 160 200 70" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".4 0 .2 1"/>
-      </ellipse>
+    <svg class="field" id="scene" viewBox="0 0 400 480" role="img" aria-label="Top-down football field. The quarterback drops back and throws a deep pass to a receiver running a post route while a cornerback trails.">
+      <rect width="400" height="60" fill="var(--fg)" opacity=".1"/>
+      <text x="200" y="38" text-anchor="middle" fill="var(--fg)" opacity=".4" style="font:700 15px Fredoka,sans-serif;letter-spacing:.35em">END ZONE</text>
+      <g fill="var(--fg)" opacity=".05"><rect y="100" width="400" height="40"/><rect y="180" width="400" height="40"/><rect y="260" width="400" height="40"/><rect y="340" width="400" height="40"/><rect y="420" width="400" height="40"/></g>
+      <g class="yd"><line x1="0" y1="100" x2="400" y2="100"/><line x1="0" y1="140" x2="400" y2="140"/><line x1="0" y1="180" x2="400" y2="180"/><line x1="0" y1="220" x2="400" y2="220"/><line x1="0" y1="260" x2="400" y2="260"/><line x1="0" y1="300" x2="400" y2="300"/><line x1="0" y1="340" x2="400" y2="340"/><line x1="0" y1="420" x2="400" y2="420"/><line x1="0" y1="460" x2="400" y2="460"/><line x1="0" y1="60" x2="400" y2="60" stroke-width="4" opacity="2"/>
+        <line x1="165" y1="62" x2="165" y2="480" stroke-width="8" stroke-dasharray="1.5 8.5"/><line x1="235" y1="62" x2="235" y2="480" stroke-width="8" stroke-dasharray="1.5 8.5"/></g>
+      <g fill="var(--fg)" opacity=".3" text-anchor="middle" style="font:700 22px Fredoka,sans-serif"><text x="36" y="148">10</text><text x="364" y="148">10</text><text x="36" y="228">20</text><text x="364" y="228">20</text><text x="36" y="308">30</text><text x="364" y="308">30</text></g>
+      <line x1="0" y1="360" x2="400" y2="360" stroke="var(--fg)" stroke-width="2" stroke-dasharray="3 7" opacity=".6"/>
+      <path class="rt thin draw" pathLength="1" style="animation-delay:.8s;animation-duration:2.6s" d="M330 360 L330 220 L210 110"/>
+      <path class="rt thin draw" pathLength="1" style="animation-delay:.8s;animation-duration:1.6s" d="M70 360 L70 330 L150 270"/>
+      <g class="pl"><circle cx="160" cy="372" r="7"/><circle cx="180" cy="372" r="7"/><circle cx="200" cy="372" r="7"/><circle cx="220" cy="372" r="7"/><circle cx="240" cy="372" r="7"/></g>
+      <path class="x" d="M153 335l14 14m0-14l-14 14M173 335l14 14m0-14l-14 14M193 335l14 14m0-14l-14 14M213 335l14 14m0-14l-14 14M233 335l14 14m0-14l-14 14"/>
+      <path class="x" d="M-7-7l14 14m0-14l-14 14"><animateMotion path="M330 338 L330 222 L226 120" dur="3.6s" begin="0s" fill="freeze" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.25;0.972;1"/></path>
+      <path class="x" d="M-7-7l14 14m0-14l-14 14"><animateMotion path="M70 338 L70 322 L152 262" dur="3.6s" begin="0s" fill="freeze" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.236;0.694;1"/></path>
+      <path class="x" d="M-7-7l14 14m0-14l-14 14"><animateMotion path="M150 230 L200 150" dur="3.6s" begin="0s" fill="freeze" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.278;0.917;1"/></path>
+      <circle class="pl" r="8"><animateMotion path="M330 360 L330 220 L210 110" dur="3.6s" begin="0s" fill="freeze" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.222;0.944;1"/></circle>
+      <circle class="pl" r="8"><animateMotion path="M70 360 L70 330 L150 270" dur="3.6s" begin="0s" fill="freeze" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.222;0.667;1"/></circle>
+      <circle class="o" r="10"><animateMotion path="M200 395 L200 425" dur="3.6s" begin="0s" fill="freeze" calcMode="linear" keyPoints="0;1;1" keyTimes="0;.333;1"/></circle>
+      <g><ellipse class="o ball" rx="8" ry="4.5"><animateTransform attributeName="transform" type="scale" dur="3.6s" begin="0s" fill="freeze" values="1;1;1.9;1;1" keyTimes="0;.556;.736;.917;1"/></ellipse>
+        <animateMotion path="M200 395 L200 425 Q150 230 214 118" dur="3.6s" begin="0s" fill="freeze" rotate="auto" calcMode="linear" keyPoints="0;.083;.083;1;1" keyTimes="0;.333;.556;.917;1"/></g>
     </svg>
   </div>
 </section>
@@ -187,6 +222,13 @@ summary{font-size:1.8rem}
 (function(){
   var views=document.querySelectorAll('.view'),links=document.querySelectorAll('nav a'),reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   function counters(sec){sec.querySelectorAll('[data-n]').forEach(function(el){var t=+el.dataset.n,s=null;function f(ts){s=s||ts;var p=Math.min((ts-s)/1200,1);el.textContent=reduce?t:Math.round(t*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)})}
+  var nav=document.getElementById('nav'),ind=nav.querySelector('.ind'),mb=document.getElementById('menu');
+  function place(){var a=nav.querySelector('a[aria-current="page"]');if(!a||!ind.offsetParent&&getComputedStyle(ind).display==='none')return;ind.style.width=a.offsetWidth+'px';ind.style.transform='translateX('+a.offsetLeft+'px)'}
+  function snap(){ind.style.transition='none';place();requestAnimationFrame(function(){requestAnimationFrame(function(){ind.style.transition=''})})}
+  function closeMenu(){nav.classList.remove('open');mb.setAttribute('aria-expanded','false');mb.textContent='Menu'}
+  mb.addEventListener('click',function(){var o=nav.classList.toggle('open');mb.setAttribute('aria-expanded',o);mb.textContent=o?'Close':'Menu'});
+  addEventListener('resize',snap);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(snap);
   function route(){
     var id=(location.hash||'#home').slice(1),sec=document.getElementById(id);
     if(!sec||!sec.classList.contains('view')){id='home';sec=document.getElementById('home')}
@@ -194,8 +236,9 @@ summary{font-size:1.8rem}
     sec.classList.add('on');
     links.forEach(function(a){a.getAttribute('href')==='#'+id?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});
     scrollTo(0,0);
+    closeMenu();place();
     if(id==='the-work')counters(sec);
-    if(id==='home'){sec.querySelectorAll('.rt').forEach(function(p){p.classList.remove('draw');void p.getBoundingClientRect();p.classList.add('draw')})}
+    if(id==='home'){sec.querySelectorAll('.rt').forEach(function(p){p.classList.remove('draw');void p.getBoundingClientRect();p.classList.add('draw')});var sv=document.getElementById('scene');if(sv.setCurrentTime){sv.setCurrentTime(reduce?4:0);if(reduce)sv.pauseAnimations()}}
   }
   addEventListener('hashchange',route);
 
@@ -204,7 +247,7 @@ summary{font-size:1.8rem}
     var dark=getComputedStyle(root).getPropertyValue('--bg').trim()==='#000';
     root.setAttribute('data-theme',dark?'light':'dark');tb.setAttribute('aria-pressed',!dark);
   });
-  route();
+  route();snap();
 })();
 </script>
 </body>
